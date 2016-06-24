@@ -49,3 +49,9 @@ profiles <- assign_max_group(profiles,
 <<base-profile-plot>>
 ```
 
+
+```{r}
+plot_profile(profiles, sample = 'sample', feature = 'taxa', value = 'abundance') +
+  theme_metafiler()
+```
+

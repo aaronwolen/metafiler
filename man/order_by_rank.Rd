@@ -33,6 +33,6 @@ A grouping variable passed to \code{by} will cause rankings to be assigned
 within each level of the grouping variable.
 }
 \examples{
-order_by_rank(profiles, 'taxa', 'abundance')
+order_by_rank(profiles, "taxa", "abundance")
 }
 

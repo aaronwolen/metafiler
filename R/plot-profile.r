@@ -34,5 +34,8 @@ plot_profile <- function(data, sample, feature, value, legend = FALSE) {
       position = feature.position,
       show.legend = legend
     ) +
-    ggplot2::scale_fill_manual(values = colors, breaks = names(colors))
+    ggplot2::scale_fill_manual(values = colors, breaks = names(colors)) +
+    ggplot2::scale_x_discrete(expand = c(0, 0)) +
+    ggplot2::scale_y_continuous(expand = c(0, 0)) +
+    theme_metafiler()
 }

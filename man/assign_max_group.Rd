@@ -25,7 +25,7 @@ prevalence of its assigned group and rank of the assigned \code{feature}'s
 \code{value} among other samples in that group.
 }
 \examples{
-assign_max_group(profiles, 'sample', 'taxa', 'abundance')
+assign_max_group(profiles, "sample", "taxa", "abundance")
 
 }
 
