@@ -1,0 +1,26 @@
+Package: metafiler
+Title: metagenomic profile plots
+Version: 0.1.9000
+Author: Aaron Wolen <aaron@wolen.com>
+Maintainer: Aaron Wolen <aaron@wolen.com>
+Description: Visualize metagenomic profile data
+URL: https://github.com/aaronwolen/metafiler
+BugReports: https://github.com/aaronwolen/metafiler/issues
+License: MIT
+LazyData: TRUE
+Depends:
+    R (>= 3.1)
+Imports:
+    stats,
+    ggplot2 (>= 2.0),
+    dplyr (>= 0.4),
+    scales,
+    RColorBrewer,
+    magrittr,
+    lazyeval
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 5.0.1
+VignetteBuilder: knitr
