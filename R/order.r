@@ -18,10 +18,11 @@
 #' @export
 #'
 #' @examples
-#' order_by_rank(profiles, 'taxa', 'abundance')
+#' order_by_rank(profiles, "taxa", "abundance")
 
-order_by_rank <- function(data, variable, value, by = NULL, fun.aggregate = NULL, direction = 1) {
-  if (!direction %in% c(1, -1)) stop('direction must be 1 or -1', call. = FALSE)
+order_by_rank <- function(data, variable, value,
+                          by = NULL, fun.aggregate = NULL, direction = 1) {
+  if (!direction %in% c(1, -1)) stop("direction must be 1 or -1", call. = FALSE)
 
   data[[variable]] <- as.character(data[[variable]])
   if (!is.null(by)) data <- dplyr::group_by_(data, by)
@@ -36,26 +37,26 @@ order_by_rank <- function(data, variable, value, by = NULL, fun.aggregate = NULL
     }
     aggregate_dupes <- interp(~ fun.aggregate(v), v = as.name(value))
     ranks <- data %>%
-      dplyr::group_by_(variable, add = TRUE) %>%
-      dplyr::summarise_(.dots = stats::setNames(list(aggregate_dupes), value)) %>%
+      group_by_(variable, add = TRUE) %>%
+      summarise_(.dots = stats::setNames(list(aggregate_dupes), value)) %>%
       dplyr::ungroup()
   }
 
   # return variable rank in descending order
   value_rank <- switch(as.character(direction),
-     '1' = interp(~ dplyr::row_number(dplyr::desc(v)), v = as.name(value)),
-    '-1' = interp(~ dplyr::row_number(v),              v = as.name(value))
+     "1" = interp(~ dplyr::row_number(dplyr::desc(v)), v = as.name(value)),
+    "-1" = interp(~ dplyr::row_number(v),              v = as.name(value))
   )
 
   ranks <- mutate_(ranks, .dots = list(rank = value_rank))
 
   if (is.null(by)) {
-    ranks <- dplyr::arrange_(ranks, .dots = 'rank')
+    ranks <- dplyr::arrange_(ranks, .dots = "rank")
   } else {
-    ranks <- dplyr::arrange_(ranks, .dots = c(by, 'rank'))
+    ranks <- dplyr::arrange_(ranks, .dots = c(by, "rank"))
   }
 
-  data[[variable]] <- factor(data[[variable]], levels = unique(ranks[[variable]]))
+  data[[variable]] <- factor(data[[variable]], unique(ranks[[variable]]))
   data
 }
 
@@ -71,15 +72,14 @@ order_by_rank <- function(data, variable, value, by = NULL, fun.aggregate = NULL
 #' @inheritParams order_by_rank
 #' @export
 order_by_prevalence <- function(data, variable, direction = 1) {
-  if (!direction %in% c(1, -1)) stop('direction must be 1 or -1', call. = FALSE)
+  if (!direction %in% c(1, -1)) stop("direction must be 1 or -1", call. = FALSE)
 
   var_order <- switch(as.character(direction),
-                      '1'  = interp( ~ dplyr::desc(n)),
-                      '-1' = 'n')
+                      "1"  = interp( ~ dplyr::desc(n)),
+                      "-1" = "n")
 
   counts <- dplyr::count_(data, variable)
   ranks  <- dplyr::arrange_(counts, .dots = var_order)
   data[[variable]] <- factor(data[[variable]], ranks[[variable]])
   data
 }
-

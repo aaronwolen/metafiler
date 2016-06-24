@@ -13,23 +13,23 @@
 #' @param group name of new grouping variable
 #'
 #' @examples
-#' assign_max_group(profiles, 'sample', 'taxa', 'abundance')
+#' assign_max_group(profiles, "sample", "taxa", "abundance")
 #'
 #' @export
 #' @importFrom lazyeval interp
-#' @importFrom magrittr '%>%'
+#' @importFrom magrittr "%>%"
 #' @importFrom dplyr summarise_ mutate_ select_ arrange_ rename_ group_by_ filter_
 
-assign_max_group <- function(data, sample, feature, value, group = '.group') {
+assign_max_group <- function(data, sample, feature, value, group = ".group") {
 
 
   # return group row index corresponding to the highest value
-  filter_max <- interp(~dplyr::row_number(dplyr::desc(v)) == 1, v = as.name(value))
+  filter_max <- interp(~ v == max(v), v = as.name(value))
 
   # sample group assignment
   groups <- data %>%
     group_by_(.dots = sample) %>%
-    filter_(filter_max) %>%
+    filter_(.dots = filter_max) %>%
     rename_(.dots = stats::setNames(list(feature), group)) %>%
     dplyr::ungroup() %>%
     order_by_prevalence(variable = group)
@@ -49,7 +49,3 @@ assign_max_group <- function(data, sample, feature, value, group = '.group') {
   data[[sample]] <- factor(data[[sample]], levels(samples[[sample]]))
   data
 }
-
-
-
-

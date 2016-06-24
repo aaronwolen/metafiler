@@ -12,30 +12,27 @@ plot_profile <- function(data, sample, feature, value, legend = FALSE) {
 
   # check whether the sum of every sample's feature values is 1
   if (all(tapply(data[[value]], data[[sample]], sum) == 1)) {
-    feature.position <- 'stack'
+    feature.position <- "stack"
   } else {
-    feature.position <- 'fill'
+    feature.position <- "fill"
     message(
-      'Standardizing values (', value, ') because 1 or more ',
-      sample, 's did not total to 1'
+      "Standardizing values (", value, ") because 1 or more ",
+      sample, "s did not total to 1"
     )
   }
 
   if (is.character(data[[feature]])) data[[feature]] <- factor(data[[feature]])
 
-  colors <- color_brewer_plus(palette = 'Set1')
+  colors <- color_brewer_plus(palette = "Set1")
   colors <- stats::setNames(colors[1:nlevels(data[[feature]])],
                             levels(data[[feature]]))
 
   ggplot(data) +
     aes_string(sample, value, fill = feature) +
     geom_bar(
-      stat = 'identity',
+      stat = "identity",
       position = feature.position,
       show.legend = legend
     ) +
     ggplot2::scale_fill_manual(values = colors, breaks = names(colors))
 }
-
-
-# plot_profile(group.reads, 'sample', 'taxaname', 'relative.abundance')
