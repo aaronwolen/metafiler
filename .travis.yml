@@ -2,6 +2,9 @@ language: R
 sudo: false
 cache: packages
 
+bioc_packages:
+  - Biobase
+
 before_deploy:
   - R -e "install.packages('roxygen2', repos = 'http://cran.rstudio.com')"
 
