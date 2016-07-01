@@ -44,7 +44,7 @@ from_dataframe.data.frame <-
   if (!is.null(fvars)) {
     fdata <- data[!dupes, c(feature, fvars), drop = FALSE]
     index <- match(fdata[[feature]], Biobase::featureNames(eset))
-    Biobase::fData(eset)[fvars] <- pdata[index, fvars, drop = FALSE]
+    Biobase::fData(eset)[fvars] <- fdata[index, fvars, drop = FALSE]
   }
   eset
 }
