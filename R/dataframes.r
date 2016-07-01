@@ -52,6 +52,10 @@ from_dataframe.data.frame <-
 
 #' Convert an ExpressionSet object to a tidy data.frame
 #'
+#' In the resulting \code{data.frame} columns containing samples and features
+#' are factors with levels mirroring the order of the \code{ExpressionSet
+#' object}.
+#'
 #' @param data an \code{ExpressionSet} object
 #' @param add.pvars should phenotype variables stored in \code{pData(data)} be included in the \code{data.frame}?
 #' @param add.fvars should feature variables stored in \code{fData(data)} be included in the \code{data.frame}?
@@ -77,9 +81,9 @@ to_dataframe.ExpressionSet <-
     out[names(pdata)] <- pdata[p.index, ]
   }
 
-  if (ncol(fdata) & add.pvars) {
+  if (ncol(fdata) & add.fvars) {
     f.index <- match(out$feature, rownames(fdata))
-    out[names(fdata)] <- pdata[f.index, ]
+    out[names(fdata)] <- fdata[f.index, ]
   }
 
   out$sample  <- factor(out$sample,  levels = Biobase::sampleNames(data))
