@@ -1,9 +1,8 @@
 #' Reorder samples and features
 #'
 #' Reorder samples or features of an \code{ExpressionSet} object based on the
-#' rank of their aggregated values. The manner in which each sample or feature's
-#' values are aggregated is determined by \code{fun.aggregate}, which defaults
-#' to \code{mean}.
+#' rank of their aggregated values. The manner in which values are aggregated is
+#' determined by \code{fun.aggregate}, which defaults to \code{mean}.
 #'
 #' @param data \code{ExpressionSet} object.
 #' @param fun.aggregate function that takes a vector of numbers and returns a
@@ -30,12 +29,12 @@ reorder_samples.ExpressionSet <-
 
   ordered.labels <- .reorder_dimension(
     Biobase::exprs(data),
-    dimension = 1,
+    dimension = 2,
     fun.aggregate = fun.aggregate,
     decreasing = decreasing
   )
 
-  data[ordered.labels, ]
+  data[, ordered.labels]
 }
 
 #' @export
@@ -52,12 +51,12 @@ reorder_features.ExpressionSet <-
 
   ordered.labels <- .reorder_dimension(
     Biobase::exprs(data),
-    dimension = 2,
+    dimension = 1,
     fun.aggregate = fun.aggregate,
     decreasing = decreasing
   )
 
-  data[, ordered.labels]
+  data[ordered.labels, ]
 }
 
 
