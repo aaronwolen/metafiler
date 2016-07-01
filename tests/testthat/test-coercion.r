@@ -64,3 +64,8 @@ test_that("includes appropriate metadata", {
                         fvars = c("fcol", "fcol2"))
   expect_equal(colnames(Biobase::fData(out)), c("fcol", "fcol2"))
 })
+
+test_that("stops if sample/feature ids are not unique", {
+  df <- rbind(df, df[1, ])
+  expect_error(from_dataframe(df, "sample", "feature", "value"))
+})
