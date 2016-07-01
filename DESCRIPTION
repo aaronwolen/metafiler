@@ -1,6 +1,6 @@
 Package: metafiler
 Title: metagenomic profile plots
-Version: 0.1.9000
+Version: 0.2.9000
 Author: Aaron Wolen <aaron@wolen.com>
 Maintainer: Aaron Wolen <aaron@wolen.com>
 Description: Visualize metagenomic profile data
@@ -13,11 +13,10 @@ Depends:
 Imports:
     stats,
     ggplot2 (>= 2.0),
-    dplyr (>= 0.4),
+    reshape2,
+    Biobase,
     scales,
-    RColorBrewer,
-    magrittr,
-    lazyeval
+    RColorBrewer
 Suggests:
     testthat,
     covr,

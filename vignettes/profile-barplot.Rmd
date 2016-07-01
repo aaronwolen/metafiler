@@ -20,38 +20,31 @@ First, load `metafiler` and the included dataset:
 
 ```{r}
 library(metafiler)
-head(profiles)
+profiles
 ```
 
 We can generate a profile barplot with this data but the result isn't very informative:
 
 ```{r base-profile-plot}
-plot_profile(profiles, sample = 'sample', feature = 'taxa', value = 'abundance')
+profile_barplot(profiles)
 ```
 
 Let's use some of the helper functations provided by `metafiler` to improve this plot. First, we can use `order_by_rank()` to ensure `taxa` are consistently ordered within each `sample`'s bar based on the average rank of their abundance across all samples.
 
 ```{r}
-profiles <- order_by_rank(profiles, variable = 'taxa', value = 'abundance')
+profiles <- reorder_features(profiles)
 <<base-profile-plot>>
 ```
 
 We can improve this further by reordering samples based on their dominant taxa. That is, we assign each sample to a group based on its most abundant taxa (sometimes referred to as an *enterotype*). This is accomplished with `assign_max_group()`, which assigns each `sample` to a new `group` based on the `feature` with the highest `value`. Furthermore, it orders samples based on `group` size and then by the rank of the dominant `feature` within that group:
 
 ```{r}
-profiles <- assign_max_group(profiles,
-  sample = 'sample',
-  feature = 'taxa',
-  value = 'abundance',
-  group = 'enterotype'
-)
-
+profiles <- add_max_feature(profiles, group = 'enterotype')
 <<base-profile-plot>>
 ```
 
 
 ```{r}
-plot_profile(profiles, sample = 'sample', feature = 'taxa', value = 'abundance') +
-  theme_metafiler()
+profile_barplot(profiles) + theme_metafiler()
 ```
 
