@@ -1,11 +1,16 @@
 #' Dotplot of sample feature profiles
 #'
+#' Dot size is determined by mapping point area to feature values. Dots can be
+#' color coded by sample (\code{color = "sample"}), by feature (\code{color =
+#' "feature"}) or any associated metadatda variable.
+#'
 #' @inheritParams add_max_feature
-#' @inheritParams profile_dotplot
-#' @param can be \code{feature}, \code{sample}, or any of the pheno/feature metadata
-#' @param max.size Size of largest points.
-#' @param legend.title.area Title of point area legend.
-#' @param legend.title.color Title of point color legend.
+#' @inheritParams profile_barplot
+#' @param color color code dots by sample, feature or any of the associated metadata variables.
+#' @param max.size Size of largest dots.
+#' @param title.area Title of point area legend.
+#' @param title.color Title of point color legend.
+#'
 #' @examples
 #' profile_dotplot(profiles)
 #' @export
@@ -18,8 +23,8 @@ profile_dotplot <-
            top.n = NULL,
            other.color = "grey50",
            max.size = 6,
-           legend.title.area,
-           legend.title.color) {
+           title.area,
+           title.color) {
   UseMethod("profile_dotplot")
 }
 
@@ -31,8 +36,8 @@ profile_dotplot.ExpressionSet <-
            top.n = NULL,
            other.color = "grey50",
            max.size = 6,
-           legend.title.area,
-           legend.title.color) {
+           title.area,
+           title.color) {
 
   # consolidate features not among top.n into an "other" group
   if (!is.null(top.n)) {
@@ -63,7 +68,7 @@ profile_dotplot.ExpressionSet <-
     point.aes <- aes_string(size = "value")
   }
 
-  if (missing(legend.title.area)) legend.title.area <- "value"
+  if (missing(title.area)) title.area <- "value"
 
   p <- ggplot(plot.data) +
     aes_string("sample", "feature") +
@@ -71,14 +76,14 @@ profile_dotplot.ExpressionSet <-
       point.aes,
       show.legend = legend
     ) +
-    ggplot2::scale_size_area(legend.title.area, max_size = max.size) +
+    ggplot2::scale_size_area(title.area, max_size = max.size) +
     theme_metafiler()
 
   if (!is.null(color)) {
     check_vars(color, colnames(plot.data))
-    if (missing(legend.title.color)) legend.title.color <- color
+    if (missing(title.color)) title.color <- color
     p <- p +
-      ggplot2::scale_color_manual(legend.title.color,
+      ggplot2::scale_color_manual(title.color,
                                   values = colors,
                                   breaks = names(colors))
   }
