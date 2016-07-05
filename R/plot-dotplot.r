@@ -18,8 +18,8 @@ profile_dotplot <-
            top.n = NULL,
            other.color = "grey50",
            max.size = 6,
-           legend.title.area = "value",
-           legend.title.color = "variable") {
+           legend.title.area,
+           legend.title.color) {
   UseMethod("profile_dotplot")
 }
 
@@ -31,8 +31,8 @@ profile_dotplot.ExpressionSet <-
            top.n = NULL,
            other.color = "grey50",
            max.size = 6,
-           legend.title.area = "value",
-           legend.title.color = "variable") {
+           legend.title.area,
+           legend.title.color) {
 
   # consolidate features not among top.n into an "other" group
   if (!is.null(top.n)) {
@@ -63,6 +63,8 @@ profile_dotplot.ExpressionSet <-
     point.aes <- aes_string(size = "value")
   }
 
+  if (missing(legend.title.area)) legend.title.area <- "value"
+
   p <- ggplot(plot.data) +
     aes_string("sample", "feature") +
     geom_point(
@@ -73,6 +75,8 @@ profile_dotplot.ExpressionSet <-
     theme_metafiler()
 
   if (!is.null(color)) {
+    check_vars(color, colnames(plot.data))
+    if (missing(legend.title.color)) legend.title.color <- color
     p <- p +
       ggplot2::scale_color_manual(legend.title.color,
                                   values = colors,
