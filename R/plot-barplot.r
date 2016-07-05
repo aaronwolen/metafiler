@@ -19,7 +19,10 @@
 #'
 #' @export
 #' @importFrom ggplot2 ggplot aes_string geom_bar
-#' @importFrom Biobase pData fData featureNames sampleNames
+#' @importFrom Biobase pData "pData<-" fData "fData<-" featureNames
+#'   "featureNames<-" sampleNames "sampleNames<-" exprs "exprs<-"
+#' @export pData "pData<-" fData "fData<-" featureNames "featureNames<-"
+#' @export sampleNames "sampleNames<-" exprs "exprs<-"
 #'
 
 profile_barplot <-
