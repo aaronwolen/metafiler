@@ -34,7 +34,16 @@ map_colors <- function(x, palette, replace = NULL) {
          call. = FALSE)
   x <- unique(x)
   n <- length(x)
-  out <- stats::setNames(palette(n), nm = x)
+  pal <- palette(n)
+
+  # respect named colors
+  if (!is.null(names(pal))) {
+    named <- names(pal) != ""
+    names(pal)[!named] <- setdiff(x, names(pal))
+    out <- pal[x]
+  } else {
+    out <- stats::setNames(palette(n), nm = x)
+  }
 
   replace <- replace[intersect(names(out), names(replace))]
   out[names(replace)] <- replace

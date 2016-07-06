@@ -28,6 +28,10 @@
 #' \code{scales} package, with the exception that additional standard colors are
 #' appended to the original palettes. The additional colors are not pretty but
 #' some effort has been made to avoid overly similar colors.
+#'
+#' The \code{manual_pal_plus()} is useful mapping specific colors to certain
+#' features.
+#'
 #' @inheritParams scales::brewer_pal
 #' @inheritParams scales::manual_pal
 #' @name palettes

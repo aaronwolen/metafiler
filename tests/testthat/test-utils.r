@@ -41,3 +41,11 @@ test_that("map_colors ignores absent replacement colors", {
   out <- map_colors(x, topo.colors, c(f = "red"))
   expect_equal(out, map_colors(x, topo.colors))
 })
+
+test_that("map_colors respects named color vectors", {
+  x <- letters[1:5]
+  colors <- c(b = "orange", d = "yellow")
+  f <- manual_pal_plus(colors)
+  out <- map_colors(x, f)
+  expect_equal(out[c("b", "d")], colors)
+})
