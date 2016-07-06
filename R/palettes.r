@@ -22,7 +22,7 @@
 )
 
 
-color_brewer_plus <- function(palette = 1, direction = 1) {
+brewer_pal_plus <- function(palette = 1, direction = 1) {
   palettes <- RColorBrewer::brewer.pal.info
 
   if (is.numeric(palette)) {

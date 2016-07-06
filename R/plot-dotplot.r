@@ -41,7 +41,7 @@ profile_dotplot.ExpressionSet <-
            title.area,
            title.color) {
 
-  if (missing(palette)) palette <- color_brewer_plus(palette = "Set1")
+  if (missing(palette)) palette <- brewer_pal_plus(palette = "Set1")
   if (!is.null(top.n)) data <- top_n_features(data, top.n)
   plot.data <- to_dataframe(data)
 
