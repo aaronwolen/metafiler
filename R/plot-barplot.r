@@ -13,6 +13,7 @@
 #' @param legend include a legend?
 #' @param top.n Number of features to visualize and color as unique entities.
 #' @param other.color Color applied to features not among the \code{top.n}.
+#' @param @inheritParams ggplot2::geom_bar
 #'
 #' @examples
 #' profile_barplot(profiles)
@@ -26,13 +27,21 @@
 #'
 
 profile_barplot <-
-  function(data, legend = FALSE, top.n = NULL, other.color = "grey50") {
+  function(data,
+           legend = FALSE,
+           top.n = NULL,
+           other.color = "grey50",
+           width = 0.9) {
   UseMethod("profile_barplot")
 }
 
 #' @export
 profile_barplot.ExpressionSet <-
-  function(data, legend = FALSE, top.n = NULL, other.color = "grey50") {
+  function(data,
+           legend = FALSE,
+           top.n = NULL,
+           other.color = "grey50",
+           width = 0.9) {
 
   # check whether the sum of every sample's feature values is 1 (or 100)
   values <- Biobase::exprs(data)
@@ -71,6 +80,7 @@ profile_barplot.ExpressionSet <-
     geom_bar(
       stat = "identity",
       position = feature.position,
+      width = width,
       show.legend = legend
     ) +
     ggplot2::scale_fill_manual(values = colors, breaks = names(colors)) +
