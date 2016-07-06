@@ -35,3 +35,9 @@ test_that("map_colors respects replacement colors", {
   out <- map_colors(x, topo.colors, c(f = "red"))
   expect_equal(out, map_colors(x, topo.colors))
 })
+
+test_that("map_colors ignores absent replacement colors", {
+  x <- letters[1:5]
+  out <- map_colors(x, topo.colors, c(f = "red"))
+  expect_equal(out, map_colors(x, topo.colors))
+})
