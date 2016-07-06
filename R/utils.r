@@ -23,3 +23,20 @@ top_n_features <- function(data, n, label = "Other") {
   # replace metadata for consolidated features with new entry for Other
   data[unique(fnames), ]
 }
+
+
+# Assign a color to each unique value of x based on the supplied palette fxn
+# replace is named vector
+# returns a vector of colors named for values of x
+map_colors <- function(x, palette, replace = NULL) {
+  if (!is.function(palette))
+    stop("palette must be a function that returns a vector of n colors.",
+         call. = FALSE)
+  x <- unique(x)
+  n <- length(x)
+  out <- stats::setNames(palette(n), nm = x)
+
+  replace <- replace[intersect(names(out), names(replace))]
+  out[names(replace)] <- replace
+  out
+}

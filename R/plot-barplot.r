@@ -10,6 +10,7 @@
 #' arugment can speed up plot rendering without sacrificing visual information.
 #'
 #' @inheritParams add_max_feature
+#' @param palette a function that generates \code{n} colors
 #' @param legend include a legend?
 #' @param top.n Number of features to visualize and color as unique entities.
 #' @param other.color Color applied to features not among the \code{top.n}.
@@ -28,6 +29,7 @@
 
 profile_barplot <-
   function(data,
+           palette,
            legend = FALSE,
            top.n = NULL,
            other.color = "grey50",
@@ -38,6 +40,7 @@ profile_barplot <-
 #' @export
 profile_barplot.ExpressionSet <-
   function(data,
+           palette,
            legend = FALSE,
            top.n = NULL,
            other.color = "grey50",
@@ -55,12 +58,10 @@ profile_barplot.ExpressionSet <-
     )
   }
 
-
-  colors <- color_brewer_plus(palette = "Set1")
-  colors <- stats::setNames(colors[1:nrow(data)], Biobase::featureNames(data))
-  if (!is.null(top.n)) colors["Other"] <- other.color
+  if (missing(palette)) palette <- color_brewer_plus(palette = "Set1")
   if (!is.null(top.n)) data <- top_n_features(data, top.n)
 
+  colors <- map_colors(featureNames(data), palette, c(Other = other.color))
   plot.data <- to_dataframe(data)
 
   ggplot(plot.data) +

@@ -23,19 +23,21 @@
 
 
 color_brewer_plus <- function(palette = 1, direction = 1) {
-
   palettes <- RColorBrewer::brewer.pal.info
 
   if (is.numeric(palette)) {
     if (palette > nrow(palettes))
       stop("There are only ", nrow(palettes), " ColorBrewer palettes",
            call. = FALSE)
-    palette <- rownames(palettes)[palette]
+    pal <- rownames(palettes)[palette]
   } else {
-    palette <- match.arg(palette, rownames(palettes))
+    pal <- match.arg(palette, rownames(palettes))
   }
 
-  n <- palettes[palette, "maxcolors"]
-  colors <- scales::brewer_pal(palette = palette, direction = direction)(n)
-  c(colors, .colors)
+  function(n) {
+    brew.n <- palettes[pal, "maxcolors"]
+    colors <- RColorBrewer::brewer.pal(brew.n, pal)
+    if (direction == -1) colors <- rev(colors)
+    c(colors, .colors)[seq_len(n)]
+  }
 }

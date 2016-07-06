@@ -19,6 +19,7 @@
 profile_dotplot <-
   function(data,
            color = NULL,
+           palette,
            legend = TRUE,
            top.n = NULL,
            other.color = "grey50",
@@ -32,6 +33,7 @@ profile_dotplot <-
 profile_dotplot.ExpressionSet <-
   function(data,
            color = NULL,
+           palette,
            legend = TRUE,
            top.n = NULL,
            other.color = "grey50",
@@ -39,6 +41,7 @@ profile_dotplot.ExpressionSet <-
            title.area,
            title.color) {
 
+  if (missing(palette)) palette <- color_brewer_plus(palette = "Set1")
   if (!is.null(top.n)) data <- top_n_features(data, top.n)
   plot.data <- to_dataframe(data)
 
@@ -47,9 +50,7 @@ profile_dotplot.ExpressionSet <-
     check_vars(color, vars)
 
     color.levels <- levels(factor(plot.data[[color]]))
-    colors <- color_brewer_plus(palette = "Set1")[seq_along(color.levels)]
-    colors <- stats::setNames(colors, color.levels)
-    if (!is.null(top.n)) colors["Other"] <- other.color
+    colors <- map_colors(color.levels, palette, c(Other = other.color))
     point.aes <- aes_string(size = "value", color = color)
   } else {
     point.aes <- aes_string(size = "value")
