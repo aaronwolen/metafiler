@@ -55,23 +55,11 @@ profile_barplot.ExpressionSet <-
     )
   }
 
-  # consolidate features not among top.n into an "other" group
-  if (!is.null(top.n)) {
-    top.n <- min(top.n, nrow(data))
-    fnames <- Biobase::featureNames(data)
-    fnames <- replace(fnames, !fnames %in% fnames[seq_len(top.n)], "Other")
-
-    pieces <- split(data.frame(Biobase::exprs(data)), fnames, drop = FALSE)
-    whole <- do.call("rbind", lapply(pieces, colSums))[unique(fnames), ]
-    Biobase::exprs(data) <- as.matrix(whole)
-
-    # replace metadata for consolidated features with new entry for Other
-    data <- data[unique(fnames), ]
-  }
 
   colors <- color_brewer_plus(palette = "Set1")
   colors <- stats::setNames(colors[1:nrow(data)], Biobase::featureNames(data))
   if (!is.null(top.n)) colors["Other"] <- other.color
+  if (!is.null(top.n)) data <- top_n_features(data, top.n)
 
   plot.data <- to_dataframe(data)
 
