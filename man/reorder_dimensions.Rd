@@ -31,9 +31,8 @@ An \code{ExpressionSet} object reordered on one dimension.
 }
 \description{
 Reorder samples or features of an \code{ExpressionSet} object based on the
-rank of their aggregated values. The manner in which each sample or feature's
-values are aggregated is determined by \code{fun.aggregate}, which defaults
-to \code{mean}.
+rank of their aggregated values. The manner in which values are aggregated is
+determined by \code{fun.aggregate}, which defaults to \code{mean}.
 }
 \examples{
 reorder_samples(profiles)

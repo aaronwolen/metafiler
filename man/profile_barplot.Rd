@@ -2,17 +2,33 @@
 % Please edit documentation in R/plot-barplot.r
 \name{profile_barplot}
 \alias{profile_barplot}
-\title{Stacked bar plot of sample feature profiles}
+\title{Stacked barplot of sample feature profiles}
 \usage{
-profile_barplot(data, legend = FALSE)
+profile_barplot(data, palette, legend = FALSE, top.n = NULL,
+  other.color = "grey50", width = 0.9)
 }
 \arguments{
 \item{data}{\code{ExpressionSet} object.}
 
+\item{palette}{a function that generates \code{n} colors.}
+
 \item{legend}{include a legend?}
+
+\item{top.n}{Number of features to visualize and color as unique entities.}
+
+\item{other.color}{Color applied to features not among the \code{top.n}.}
+
+\item{width}{Bar width. By default, set to 90\% of the resolution of the data.}
 }
 \description{
-Stacked bar plot of sample feature profiles
+The \code{top.n} argument consolidates all features not among the
+\code{top.n} into a single feature that is named "Other". The order of
+features within the \code{ExpressionSet} object is used to determine whether
+features are among the \code{top.n}. The \code{reorder_features()} function
+can be used to change this order with respect to the rank of their aggregated
+values. By default all features are visualized. However, for cases where
+there are many features with relatively values, utilizing the \code{top.n}
+arugment can speed up plot rendering without sacrificing visual information.
 }
 \examples{
 profile_barplot(profiles)

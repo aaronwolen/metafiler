@@ -10,11 +10,11 @@
 #' arugment can speed up plot rendering without sacrificing visual information.
 #'
 #' @inheritParams add_max_feature
-#' @param palette a function that generates \code{n} colors
+#' @inheritParams ggplot2::geom_bar
+#' @param palette a function that generates \code{n} colors.
 #' @param legend include a legend?
 #' @param top.n Number of features to visualize and color as unique entities.
 #' @param other.color Color applied to features not among the \code{top.n}.
-#' @param @inheritParams ggplot2::geom_bar
 #'
 #' @examples
 #' profile_barplot(profiles)
