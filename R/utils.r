@@ -9,6 +9,17 @@ check_vars <- function(x, variables) {
   )
 }
 
+# tabulates the elements of an atomic vector and returns the n most frequent
+# in order of decreasing frequency
+most_frequent <- function(x, n) {
+  uniq <- length(unique(x))
+  if (missing(n) || n > uniq) n <- uniq
+  counts <- table(x, dnn = NULL)
+  out <- names(sort(counts, decreasing = TRUE))
+  out[seq_len(n)]
+}
+
+
 # consolidate features not among top.n into an "other" group
 top_n_features <- function(data, n, label = "Other") {
   top.n <- min(n, nrow(data))
