@@ -1,5 +1,16 @@
 context("Utilities")
 
+test_that("most_frequent returns most frequent elements", {
+  x <- c(rep("a", 2), rep("b", 5), rep("c", 3))
+
+  expect_equal(most_frequent(x),    c("b", "c", "a"))
+  expect_equal(most_frequent(x, 5), c("b", "c", "a"))
+
+  expect_equal(most_frequent(x, 2), c("b", "c"))
+  expect_equal(most_frequent(x, 1), c("b"))
+})
+
+
 test_that("check_vars identifies missing variables", {
   x <- letters[1:5]
   expect_silent(check_vars(c("a", "b"), x))
