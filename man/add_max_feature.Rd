@@ -4,7 +4,8 @@
 \alias{add_max_feature}
 \title{Assign samples to a new group variable based on the highest feature}
 \usage{
-add_max_feature(data, group = ".group", reorder.samples = TRUE)
+add_max_feature(data, group = ".group", reorder.samples = TRUE,
+  top.n = NULL)
 }
 \arguments{
 \item{data}{\code{ExpressionSet} object.}
@@ -14,6 +15,10 @@ add_max_feature(data, group = ".group", reorder.samples = TRUE)
 \item{reorder.samples}{If \code{TRUE}, samples are reordered by the
 prevalance of their assigned group and rank of the assigned feature's value
 within the group.}
+
+\item{top.n}{Limit the number of levels in the new grouping variable to the
+\code{top.n} most prevalent. Samples not among the most prevalent groups
+are assigned to \code{"Othere"}.}
 }
 \description{
 Assign samples to a new group variable based on the highest feature

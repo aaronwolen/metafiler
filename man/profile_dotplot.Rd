@@ -16,7 +16,9 @@ profile_dotplot(data, color = NULL, palette, legend = TRUE, top.n = NULL,
 
 \item{legend}{include a legend?}
 
-\item{top.n}{Number of features to visualize and color as unique entities.}
+\item{top.n}{Limit the number of levels in the new grouping variable to the
+\code{top.n} most prevalent. Samples not among the most prevalent groups
+are assigned to \code{"Othere"}.}
 
 \item{other.color}{Color applied to features not among the \code{top.n}.}
 

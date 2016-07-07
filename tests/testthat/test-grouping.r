@@ -16,3 +16,8 @@ test_that("samples are ordered by group prevalence", {
   expect_is(out$.group, "factor")
   expect_equal(Biobase::sampleNames(out), c("s3", "s1", "s2"))
 })
+
+test_that("sample not in top.n groups are assigned to Other", {
+  out <- add_max_feature(eset, reorder.samples = TRUE, top.n = 1)
+  expect_equal(c("f3", "Other"), levels(out$.group))
+})

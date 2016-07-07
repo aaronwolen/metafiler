@@ -8,6 +8,9 @@
 #' @param reorder.samples If \code{TRUE}, samples are reordered by the
 #'   prevalance of their assigned group and rank of the assigned feature's value
 #'   within the group.
+#' @param top.n Limit the number of levels in the new grouping variable to the
+#'   \code{top.n} most prevalent. Samples not among the most prevalent groups
+#'   are assigned to \code{"Othere"}.
 #'
 #' @examples
 #' profiles <- add_max_feature(profiles, group = "enterotype")
@@ -16,13 +19,13 @@
 #' @export
 
 add_max_feature <-
-  function(data, group = ".group", reorder.samples = TRUE) {
+  function(data, group = ".group", reorder.samples = TRUE, top.n = NULL) {
   UseMethod("add_max_feature")
 }
 
 #' @export
 add_max_feature.ExpressionSet <-
-  function(data, group = ".group", reorder.samples = TRUE) {
+  function(data, group = ".group", reorder.samples = TRUE, top.n = NULL) {
 
   values <- Biobase::exprs(data)
 
@@ -31,8 +34,15 @@ add_max_feature.ExpressionSet <-
   sample.group <- Biobase::featureNames(data)[max.i]
 
   # order by prevalence
-  group.n <- sort(table(sample.group), decreasing = TRUE)
-  sample.group <- factor(sample.group, levels = names(group.n))
+  groups <- most_frequent(sample.group)
+
+  if (!is.null(top.n)) {
+    top.n <- min(top.n, length(groups))
+    groups <- c(groups[seq_len(top.n)], "Other")
+    sample.group <- replace(sample.group, !sample.group %in% groups, "Other")
+  }
+
+  sample.group <- factor(sample.group, levels = groups)
 
   Biobase::phenoData(data)[[group]] <- sample.group
   if (!reorder.samples) return(data)
