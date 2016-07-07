@@ -10,6 +10,8 @@
 #'   associated with features
 #' @importFrom reshape2 acast
 #' @importFrom stats as.formula
+#' @importFrom Biobase ExpressionSet
+#' @export ExpressionSet
 #' @export
 
 from_dataframe <-
