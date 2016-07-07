@@ -70,7 +70,7 @@ to_dataframe <-
 to_dataframe.ExpressionSet <-
   function(data, add.pvars = TRUE, add.fvars = TRUE) {
 
-  out <- as.data.frame.table(Biobase::exprs(data))
+  out <- as.data.frame.table(Biobase::exprs(data), stringsAsFactors = FALSE)
   names(out) <- c("feature", "sample", "value")
 
   pdata <- Biobase::pData(data)
