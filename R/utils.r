@@ -16,7 +16,8 @@ top_n_features <- function(data, n, label = "Other") {
   fnames <- Biobase::featureNames(data)
   fnames <- replace(fnames, !fnames %in% fnames[seq_len(top.n)], label)
 
-  pieces <- split(data.frame(Biobase::exprs(data)), fnames, drop = FALSE)
+  values <- data.frame(Biobase::exprs(data), check.names = FALSE)
+  pieces <- split(values, fnames, drop = FALSE)
   whole <- do.call("rbind", lapply(pieces, colSums))[unique(fnames), ]
   Biobase::exprs(data) <- as.matrix(whole)
 

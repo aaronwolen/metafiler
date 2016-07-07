@@ -15,6 +15,19 @@ test_that("top_n_features consolidated bottom features", {
   expect_equivalent(Biobase::exprs(out)["Other", ], colSums(mat[2:3, ]))
 })
 
+test_that("top_n_features does not munge feature/sample names", {
+  eset2 <- eset
+  Biobase::featureNames(eset2) <- paste0(Biobase::featureNames(eset2), "-a")
+  Biobase::sampleNames(eset2)  <- paste0(Biobase::sampleNames(eset2),  "-b")
+  out <- top_n_features(eset2, 2)
+  out.mat <- Biobase::exprs(out)
+  # features
+  expect_equal(Biobase::featureNames(out), c("f1-a", "f2-a", "Other"))
+  expect_equal(rownames(out.mat), Biobase::featureNames(out))
+  # samples
+  expect_equal(Biobase::sampleNames(out), Biobase::sampleNames(eset2))
+  expect_equal(colnames(out.mat), Biobase::sampleNames(out))
+})
 
 test_that("expects a palette function", {
   expect_error(map_colors(letters[1:5], colors()[1:5]), "palette must")
