@@ -11,7 +11,7 @@ Installation
 ------------
 
 ``` r
-# install.packages("devtools")
+# install.packages(c("devtools", "knitr", "rmarkdown"))
 source("http://www.bioconductor.org/biocLite.R")
 biocLite("Biobase")
 devtools::install_github("aaronwolen/metafiler", build_vignettes = TRUE)
