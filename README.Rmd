@@ -1,0 +1,50 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 3
+)
+knitr::opts_knit$set(upload.fun = knitr::imgur_upload)
+```
+
+## metafiler
+
+Taxonomic profile visualizations.
+
+[![Travis-CI Build Status](https://travis-ci.org/aaronwolen/metafiler.svg?branch=master)](https://travis-ci.org/aaronwolen/metafiler)
+[![codecov](https://codecov.io/gh/aaronwolen/metafiler/branch/master/graph/badge.svg)](https://codecov.io/gh/aaronwolen/metafiler)
+
+## Installation
+
+```{r install, eval=FALSE}
+# install.packages("devtools")
+source("http://www.bioconductor.org/biocLite.R")
+biocLite("Biobase")
+devtools::install_github("aaronwolen/metafiler", build_vignettes = TRUE)
+```
+
+## Demo
+
+```{r load-data}
+library(metafiler)
+data(profiles)
+```
+
+```{r profile-plot, message=FALSE}
+profiles <- add_max_feature(profiles)
+profile_barplot(profiles)
+```
+
+More information can be found in the vignette:
+
+```{r vignette, eval=FALSE}
+vignette("metafiler-intro", package = "metafiler")
+```
+
