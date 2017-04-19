@@ -14,6 +14,7 @@
 #' @param palette a function that generates \code{n} colors.
 #' @param legend include a legend?
 #' @param top.n Number of features to visualize and color as unique entities.
+#' @param order.features Arrange features in ascending order within each sample.
 #' @param other.color Color applied to features not among the \code{top.n}.
 #'
 #' @examples
@@ -32,6 +33,7 @@ profile_barplot <-
            palette,
            legend = FALSE,
            top.n = NULL,
+           order.features = FALSE,
            other.color = "grey50",
            width = 0.9) {
   UseMethod("profile_barplot")
@@ -43,6 +45,7 @@ profile_barplot.ExpressionSet <-
            palette,
            legend = FALSE,
            top.n = NULL,
+           order.features = FALSE,
            other.color = "grey50",
            width = 0.9) {
 
@@ -64,8 +67,19 @@ profile_barplot.ExpressionSet <-
   colors <- map_colors(featureNames(data), palette, c(Other = other.color))
   plot.data <- to_dataframe(data)
 
+  if (order.features) {
+    plot.data <- plyr::ddply(
+        .data = plot.data,
+        .variables = "sample",
+        .fun = plyr::mutate,
+        group = plyr::desc(rank(value, ties.method = "first"))
+      )
+  } else {
+    plot.data$group <- as.numeric(plot.data$sample)
+  }
+
   ggplot(plot.data) +
-    aes_string("sample", "value", fill = "feature") +
+    aes_string("sample", "value", fill = "feature", group = "group") +
     ggplot2::geom_col(
       position = feature.position,
       width = width,
