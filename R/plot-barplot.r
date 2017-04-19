@@ -20,7 +20,7 @@
 #' profile_barplot(profiles)
 #'
 #' @export
-#' @importFrom ggplot2 ggplot aes_string geom_bar
+#' @importFrom ggplot2 ggplot aes_string geom_col
 #' @importFrom Biobase pData "pData<-" fData "fData<-" featureNames
 #'   "featureNames<-" sampleNames "sampleNames<-" exprs "exprs<-"
 #' @export pData "pData<-" fData "fData<-" featureNames "featureNames<-"
@@ -66,8 +66,7 @@ profile_barplot.ExpressionSet <-
 
   ggplot(plot.data) +
     aes_string("sample", "value", fill = "feature") +
-    geom_bar(
-      stat = "identity",
+    ggplot2::geom_col(
       position = feature.position,
       width = width,
       show.legend = legend
