@@ -5,7 +5,7 @@
 \title{Stacked barplot of sample feature profiles}
 \usage{
 profile_barplot(data, palette, legend = FALSE, top.n = NULL,
-  other.color = "grey50", width = 0.9)
+  order.features = FALSE, other.color = "grey50", width = 0.9)
 }
 \arguments{
 \item{data}{\code{ExpressionSet} object.}
@@ -15,6 +15,8 @@ profile_barplot(data, palette, legend = FALSE, top.n = NULL,
 \item{legend}{include a legend?}
 
 \item{top.n}{Number of features to visualize and color as unique entities.}
+
+\item{order.features}{Arrange features in ascending order within each sample.}
 
 \item{other.color}{Color applied to features not among the \code{top.n}.}
 
@@ -34,4 +36,3 @@ arugment can speed up plot rendering without sacrificing visual information.
 profile_barplot(profiles)
 
 }
-

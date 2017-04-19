@@ -14,4 +14,3 @@ theme_metafiler(base_size = 12, base_family = "")
 \description{
 Default profile barplot theme
 }
-

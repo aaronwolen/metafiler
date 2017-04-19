@@ -18,4 +18,3 @@ In the resulting \code{data.frame} columns containing samples and features
 are factors with levels mirroring the order of the \code{ExpressionSet
 object}.
 }
-

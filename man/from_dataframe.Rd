@@ -24,4 +24,3 @@ associated with features}
 \description{
 Convert a tidy data.frame to an ExpressionSet object
 }
-

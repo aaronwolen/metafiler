@@ -36,4 +36,3 @@ color coded by sample (\code{color = "sample"}), by feature (\code{color =
 \examples{
 profile_dotplot(profiles)
 }
-

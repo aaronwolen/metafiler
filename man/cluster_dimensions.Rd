@@ -2,10 +2,10 @@
 % Please edit documentation in R/cluster.r
 \name{cluster_dimensions}
 \alias{cluster_dimensions}
-\alias{cluster_features}
-\alias{cluster_features.ExpressionSet}
 \alias{cluster_samples}
 \alias{cluster_samples.ExpressionSet}
+\alias{cluster_features}
+\alias{cluster_features.ExpressionSet}
 \title{Reorder samples and features by hierarchical clustering}
 \usage{
 cluster_samples(data, dist.method = "euclidean", hclust.method = "average")
@@ -46,4 +46,3 @@ cluster_features(profiles)
 \seealso{
 \code{\link[stats]{dist}}, \code{\link[stats]{hclust}}
 }
-

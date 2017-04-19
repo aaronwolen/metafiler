@@ -28,4 +28,3 @@ profiles <- add_max_feature(profiles, group = "enterotype")
 profiles$enterotype
 
 }
-
