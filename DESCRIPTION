@@ -23,6 +23,7 @@ Suggests:
     covr,
     lintr,
     knitr,
+    roxygen2,
     rmarkdown
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
