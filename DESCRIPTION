@@ -1,6 +1,6 @@
 Package: metafiler
 Title: metagenomic profile plots
-Version: 0.1.2.9000
+Version: 0.1.3
 Author: Aaron Wolen <aaron@wolen.com>
 Maintainer: Aaron Wolen <aaron@wolen.com>
 Description: Visualize metagenomic profile data
