@@ -12,7 +12,7 @@ Depends:
     R (>= 3.1)
 Imports:
     stats,
-    ggplot2 (>= 2.0),
+    ggplot2 (>= 2.2.1),
     reshape2,
     Biobase,
     scales,
