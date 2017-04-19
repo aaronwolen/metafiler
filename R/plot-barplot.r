@@ -50,9 +50,9 @@ profile_barplot.ExpressionSet <-
   values <- Biobase::exprs(data)
 
   if ( all(colSums(values) == 1) | all(colSums(values) == 100) ) {
-    feature.position <- "stack"
+    feature.position <- ggplot2::position_stack(reverse = TRUE)
   } else {
-    feature.position <- "fill"
+    feature.position <- ggplot2::position_fill(reverse = TRUE)
     message(
       "Standardizing values  because 1 or more samples did not total to 1"
     )
