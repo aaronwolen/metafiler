@@ -23,4 +23,3 @@ prof.file <- system.file("inst/extdata/profiles.txt", package = "metafiler")
 read_metaphalan(prof.file)
 }
 }
-

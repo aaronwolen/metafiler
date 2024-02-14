@@ -20,4 +20,3 @@ profiles
 Profiles of 51 vaginal metagenomic samples from the Human Microbiome Project and analyzed using MetaPhlan2.
 }
 \keyword{datasets}
-

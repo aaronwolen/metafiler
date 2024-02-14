@@ -14,13 +14,14 @@
 #' @param palette a function that generates \code{n} colors.
 #' @param legend include a legend?
 #' @param top.n Number of features to visualize and color as unique entities.
+#' @param order.features Arrange features in ascending order within each sample.
 #' @param other.color Color applied to features not among the \code{top.n}.
 #'
 #' @examples
 #' profile_barplot(profiles)
 #'
 #' @export
-#' @importFrom ggplot2 ggplot aes_string geom_bar
+#' @importFrom ggplot2 ggplot aes_string geom_col
 #' @importFrom Biobase pData "pData<-" fData "fData<-" featureNames
 #'   "featureNames<-" sampleNames "sampleNames<-" exprs "exprs<-"
 #' @export pData "pData<-" fData "fData<-" featureNames "featureNames<-"
@@ -32,6 +33,7 @@ profile_barplot <-
            palette,
            legend = FALSE,
            top.n = NULL,
+           order.features = FALSE,
            other.color = "grey50",
            width = 0.9) {
   UseMethod("profile_barplot")
@@ -43,6 +45,7 @@ profile_barplot.ExpressionSet <-
            palette,
            legend = FALSE,
            top.n = NULL,
+           order.features = FALSE,
            other.color = "grey50",
            width = 0.9) {
 
@@ -50,9 +53,9 @@ profile_barplot.ExpressionSet <-
   values <- Biobase::exprs(data)
 
   if ( all(colSums(values) == 1) | all(colSums(values) == 100) ) {
-    feature.position <- "stack"
+    feature.position <- ggplot2::position_stack(reverse = TRUE)
   } else {
-    feature.position <- "fill"
+    feature.position <- ggplot2::position_fill(reverse = TRUE)
     message(
       "Standardizing values  because 1 or more samples did not total to 1"
     )
@@ -64,10 +67,20 @@ profile_barplot.ExpressionSet <-
   colors <- map_colors(featureNames(data), palette, c(Other = other.color))
   plot.data <- to_dataframe(data)
 
+  if (order.features) {
+    plot.data <- plyr::ddply(
+        .data = plot.data,
+        .variables = "sample",
+        .fun = plyr::mutate,
+        group = plyr::desc(rank(value, ties.method = "first"))
+      )
+  } else {
+    plot.data$group <- as.numeric(plot.data$sample)
+  }
+
   ggplot(plot.data) +
-    aes_string("sample", "value", fill = "feature") +
-    geom_bar(
-      stat = "identity",
+    aes_string("sample", "value", fill = "feature", group = "group") +
+    ggplot2::geom_col(
       position = feature.position,
       width = width,
       show.legend = legend

@@ -5,8 +5,5 @@ cache: packages
 bioc_packages:
   - Biobase
 
-before_deploy:
-  - R -e "install.packages('roxygen2', repos = 'http://cran.rstudio.com')"
-
 after_success:
   - Rscript -e 'library(covr); codecov()'

@@ -2,10 +2,10 @@
 % Please edit documentation in R/order.r
 \name{reorder_dimensions}
 \alias{reorder_dimensions}
-\alias{reorder_features}
-\alias{reorder_features.ExpressionSet}
 \alias{reorder_samples}
 \alias{reorder_samples.ExpressionSet}
+\alias{reorder_features}
+\alias{reorder_features.ExpressionSet}
 \title{Reorder samples and features}
 \usage{
 reorder_samples(data, fun.aggregate = NULL, decreasing = TRUE)
@@ -38,4 +38,3 @@ determined by \code{fun.aggregate}, which defaults to \code{mean}.
 reorder_samples(profiles)
 reorder_features(profiles)
 }
-

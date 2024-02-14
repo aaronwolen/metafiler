@@ -33,6 +33,6 @@ test_that("respects top.n argument", {
   pdata <- ggplot2::ggplot_build(p)$data[[1]]
   expect_equal(max(pdata$y), 2)
 
-  ylabs <- ggplot2::ggplot_build(p)$panel$ranges[[1]]$y.labels
+  ylabs <- ggplot2::ggplot_build(p)$layout$panel_ranges[[1]]$y.labels
   expect_equal(ylabs, c("f1", "Other"))
 })
